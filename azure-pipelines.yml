@@ -44,10 +44,21 @@ steps:
   inputs:
     testResultsFiles: "**/TEST-*.xml"
     testRunTitle: 'Python $(PYTHON_VERSION)'
-
 - task: InvokeRESTAPI@1
   inputs:
     connectionType: 'connectedServiceNameARM'
     azureServiceConnection: 'Abonnement Visual Studio Professional(41270ab8-d22e-4dfe-86ee-dea2f8e8c22b)'
     method: 'POST'
+    headers: |
+      {
+              "authorization" = "Bearer $token"
+          }
+    body: |
+      {
+              Method      = "POST"
+              Uri         = "https://api.sendgrid.com/v3/mail/send"
+              Headers     = $Header
+              ContentType = "application/json"
+              Body        = $BodyJson
+          }
     waitForCompletion: 'false'
