@@ -44,21 +44,17 @@ steps:
   inputs:
     testResultsFiles: "**/TEST-*.xml"
     testRunTitle: 'Python $(PYTHON_VERSION)'
+
+# Invoke REST API
+# Invoke a REST API as a part of your pipeline.
 - task: InvokeRESTAPI@1
   inputs:
-    connectionType: 'connectedServiceNameARM'
-    azureServiceConnection: 'Abonnement Visual Studio Professional(41270ab8-d22e-4dfe-86ee-dea2f8e8c22b)'
-    method: 'POST'
-    headers: |
-      {
-              "authorization" = "Bearer $token"
-          }
-    body: |
-      {
-              Method      = "POST"
-              Uri         = "https://api.sendgrid.com/v3/mail/send"
-              Headers     = $Header
-              ContentType = "application/json"
-              Body        = $BodyJson
-          }
-    waitForCompletion: 'false'
+    #connectionType: 'connectedServiceName' # Options: connectedServiceName, connectedServiceNameARM
+    #serviceConnection: # Required when connectionType == ConnectedServiceName
+    #azureServiceConnection: # Required when connectionType == ConnectedServiceNameARM
+    #method: 'POST' # Options: OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, PATCH
+    #headers: '{Content-Type:application/json, PlanUrl: $(system.CollectionUri), ProjectId: $(system.TeamProjectId), HubName: $(system.HostType), PlanId: $(system.PlanId), JobId: $(system.JobId), TimelineId: $(system.TimelineId), TaskInstanceId: $(system.TaskInstanceId), AuthToken: $(system.AccessToken)}' 
+    #body: # Required when method != GET && Method != HEAD
+    #urlSuffix: # Optional
+    #waitForCompletion: 'false' # Options: true, false
+    #successCriteria: # Optional
